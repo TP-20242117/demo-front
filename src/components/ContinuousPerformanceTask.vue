@@ -165,7 +165,7 @@ h1 {
   background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
 }
 
@@ -230,7 +230,7 @@ h1 {
   font-size: 15px;
   border: none;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 50px;
 }
 
 .result-screen button:hover {

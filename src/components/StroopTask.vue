@@ -173,7 +173,7 @@ export default {
   background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
 }
 
@@ -264,7 +264,7 @@ button {
   font-size: 15px;
   border: none;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 50px;
   width: auto !important;
 }
 

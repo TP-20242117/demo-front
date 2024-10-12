@@ -82,23 +82,29 @@ export default {
       this.startTimer();
       this.showNextArrow();
     },
+
     showNextArrow() {
       if (this.timeUp) return;
+
       this.generateRandomDirection();
       this.showArrow = true;
       this.startTime = new Date();
       this.result = null;
       this.hasAnswered = false;
+
       setTimeout(() => {
         this.showArrow = false;
+
         this.showWaitingSymbol = true;
         setTimeout(() => {
           this.showWaitingSymbol = false;
+
           if (!this.hasAnswered) {
             this.result = 'missed';
             this.missedArrows++;
           }
           this.showResult = true;
+
           setTimeout(() => {
             this.showResult = false;
             if (!this.timeUp) {
@@ -108,13 +114,16 @@ export default {
         }, 1000);
       }, 1000);
     },
+
     generateRandomDirection() {
       const randomIndex = Math.floor(Math.random() * this.directions.length);
       this.currentDirection = this.directions[randomIndex];
     },
+
     handleKeyPress(event) {
       if (!this.timeUp && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
         const responseTime = (new Date() - this.startTime);
+
         if (
           (event.key === 'ArrowLeft' && this.currentDirection === 'left') ||
           (event.key === 'ArrowRight' && this.currentDirection === 'right')
@@ -132,6 +141,7 @@ export default {
         }
       }
     },
+
     startTimer() {
       this.timerInterval = setInterval(() => {
         if (this.timer > 0) {
@@ -142,6 +152,7 @@ export default {
         }
       }, 1000);
     },
+
     resetGame() {
       this.correctAnswers = 0;
       this.wrongAnswers = 0;
@@ -153,6 +164,7 @@ export default {
       this.showResult = false;
       this.showWaitingSymbol = false;
     },
+
     goToTaskSelection() {
       this.$emit('backToTaskSelection');
     },
@@ -192,7 +204,7 @@ export default {
   background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
 }
 
@@ -271,7 +283,7 @@ export default {
   font-size: 15px;
   border: none;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 50px;
 }
 
 .result-screen button:hover {
