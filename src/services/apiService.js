@@ -26,6 +26,26 @@ export const postStroopTaskResults = async (data) => {
       console.error('Error al enviar resultados de Stroop Task:', error);
       throw error;
     }
-  };
+};
+
+export const postCptResults = async (data) => {
+    try {
+      const response = await api.post('/evaluations/cpt', data);
+      return response.data;
+    } catch (error) {
+      console.error('Error al enviar resultados de CPT:', error);
+      throw error;
+    }
+};
+
+export const postSstResults = async (data) => {
+    try {
+      const response = await api.post('/evaluations/sst', data);
+      return response.data;
+    } catch (error) {
+      console.error('Error al enviar resultados de SST:', error);
+      throw error;
+    }
+};
 
 export default api;

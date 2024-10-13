@@ -37,9 +37,12 @@
 </template>
 
 <script>
+import { postCptResults } from '../services/apiService';
+
 export default {
   data() {
     return {
+      patientId: parseInt(localStorage.getItem("patientId"), 10),
       taskStarted: false,
       letters: 'ABCDEFGHIJ'.split(''),
       targetLetter: '',
@@ -127,7 +130,25 @@ export default {
       } else {
         this.averageReactionTime = "No hubo respuestas correctas";
       }
+      this.sendCptResults();
     },
+
+    async sendCptResults() {
+      const cptData = {
+        patientId: this.patientId,
+        reactionTime: parseFloat(this.averageReactionTime),
+        omissionErrors: this.omissionErrors,
+        commissionErrors: this.commissionErrors,
+      };
+
+      try {
+        const response = await postCptResults(cptData);
+        console.log("Resultados de CPT enviados:", response);
+      } catch (error) {
+        console.error("Error al enviar resultados de CPT:", error);
+      }
+    },
+
     goToTaskSelection() {
       this.$emit('backToTaskSelection');
     }

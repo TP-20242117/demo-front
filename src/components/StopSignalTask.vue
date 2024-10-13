@@ -45,9 +45,12 @@
 </template>
 
 <script>
+import { postSstResults } from '../services/apiService';
+
 export default {
   data() {
     return {
+      patientId: parseInt(localStorage.getItem("patientId"), 10),
       taskStarted: false,
       directions: ['left', 'right'],
       currentDirection: '',
@@ -149,8 +152,26 @@ export default {
         } else {
           this.timeUp = true;
           clearInterval(this.timerInterval);
+          this.sendSstResults();
         }
       }, 1000);
+    },
+
+    async sendSstResults() {
+      const sstData = {
+        patientId: this.patientId,
+        reactionTime: parseFloat(this.averageResponseTime),
+        correctResponses: this.correctAnswers,
+        failures: this.wrongAnswers,
+        omittedArrows: this.missedArrows,
+      };
+
+      try {
+        const response = await postSstResults(sstData);
+        console.log("Resultados de SST enviados:", response);
+      } catch (error) {
+        console.error("Error al enviar resultados de SST:", error);
+      }
     },
 
     resetGame() {

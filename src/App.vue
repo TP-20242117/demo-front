@@ -1,8 +1,6 @@
 <template>
   <div>
     <AppNavbar></AppNavbar>
-
-    <!-- Pantalla de términos y condiciones -->
     <div v-if="termsScreen" class="terms-screen">
       <h2>Términos y Condiciones</h2>
       <p>Esta versión de demostración está diseñada para recopilar datos anónimos con el fin de evaluar el desempeño de escolares que presentan Trastorno por Déficit de Atención e Hiperactividad (TDAH). Al participar en esta demostración, aceptas que los datos generados durante tu uso serán utilizados con fines de investigación y análisis.
@@ -123,9 +121,10 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
+  margin-top: -5vh;
   text-align: center;
-  padding: 0 20px;
+  padding: 0 30px;
 }
 
 h2 {
