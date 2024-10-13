@@ -49,9 +49,12 @@
 </template>
 
 <script>
+import { postStroopTaskResults} from '../services/apiService.js';
+
 export default {
   data() {
     return {
+      patientId: localStorage.getItem("patientId"),
       taskStarted: false,
       colors: [
         { name: 'ROJO', code: '#ff0000' },
@@ -118,6 +121,7 @@ export default {
         } else {
           this.timeUp = true;
           clearInterval(this.timerInterval);
+          this.sendResults();
         }
       }, 1000);
     },
@@ -131,12 +135,28 @@ export default {
     },
     goToInstructions() {
       this.$emit('backToTaskSelection');
-    }
+    },
+
+    async sendResults(){
+        const stroopData = {
+          patientId: parseInt(this.patientId),
+          responseTime: this.averageResponseTime,
+          correctAnswers: this.correctAnswers,
+          errors: this.wrongAnswers,
+        };
+
+        try {
+          const response = await postStroopTaskResults(stroopData);
+          console.log("Resultados de Stroop Task enviados:", response);
+        } catch (error) {
+          console.error("Error al enviar resultados de Stroop Task:", error);
+        }
+    },
   },
   computed: {
     averageResponseTime() {
       const totalResponseTime = this.responseTimes.reduce((acc, time) => acc + time, 0);
-      return this.responseTimes.length ? (totalResponseTime / this.responseTimes.length).toFixed(0) : 0;
+      return this.responseTimes.length ? parseFloat((totalResponseTime / this.responseTimes.length).toFixed(2)) : 0;
     }
   },
   beforeUnmount() {

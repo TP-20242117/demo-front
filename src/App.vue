@@ -62,6 +62,7 @@ import StroopTask from './components/StroopTask.vue';
 import ContinuousPerformanceTask from './components/ContinuousPerformanceTask.vue';
 import StopSignalTask from './components/StopSignalTask.vue';
 import AppNavbar from './components/AppNavbar.vue';
+import { addPatient } from './services/apiService.js';
 
 export default {
   data() {
@@ -83,9 +84,22 @@ export default {
       this.termsScreen = false;
       this.introScreen = true;
     },
-    handleTdahResponse(response) {
+    async handleTdahResponse(response) {
       this.introScreen = false;
-      console.log("Respuesta sobre TDAH:", response);
+      const patientData = {
+      hasAdhd: response
+      };
+
+      try {
+        const result = await addPatient(patientData);
+        const patientId = result.id;
+        localStorage.setItem('patientId', patientId);
+        console.log("Paciente agregado:", result);
+      } catch (error) {
+      console.error("Error al agregar el paciente:", error);
+    }
+    
+    console.log("Respuesta sobre TDAH:", response);
     },
     selectTask(task) {
       this.selectedTask = task;
