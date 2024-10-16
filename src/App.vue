@@ -18,7 +18,7 @@ El objetivo de esta recopilación de datos es contribuir a una mejor comprensió
 - No se te proporcionará compensación alguna por tu participación.
        </p>
        <p>
-- Puedes abandonar la demo en cualquier momento sin necesidad de proporcionar una razón.</p>
+- Debes realizar todas las evaluaciones antes de salir de la aplicación.</p>
       <div class="checkbox-container">
         <input type="checkbox" id="acceptTerms" v-model="acceptTerms" />
         <label for="acceptTerms">He leído y acepto los términos y condiciones</label>
