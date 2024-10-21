@@ -26,7 +26,7 @@
       <button :disabled="!acceptTerms" @click="handleTermsAccepted">Continuar</button>
     </div>
 
-    <div v-else-if="introScreen" class="screen intro-screen">
+    <div v-else-if="introScreen && !createdPatient" class="screen intro-screen">
       <h2>¿Tienes TDAH?</h2>
       <div class="button-container">
         <button @click="handleTdahResponse(true)">Sí</button>
@@ -72,6 +72,7 @@ export default {
         cpt: false,
         stop: false,
       },
+      createdPatient: false,
     };
   },
   components: {
@@ -79,6 +80,10 @@ export default {
     ContinuousPerformanceTask,
     StopSignalTask,
     AppNavbar,
+  },
+  mounted(){
+    this.createdPatient=localStorage.getItem('patientId') ?true : false;
+    console.log(this.createdPatient);
   },
   methods: {
     handleTermsAccepted() {
