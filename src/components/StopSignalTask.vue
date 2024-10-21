@@ -20,13 +20,16 @@
         <div class="arrow-container">
           <span v-if="showArrow && currentDirection === 'left'" class="arrow">⬅️</span>
           <span v-if="showArrow && currentDirection === 'right'" class="arrow">➡️</span>
-          <span v-if="showWaitingSymbol" class="waiting-symbol">🔄</span>
         </div>
 
+        
         <p v-if="showResult" :class="result === 'correct' ? 'correct' : result === 'wrong' ? 'wrong' : 'missed'" class="result-text">
-          {{ result === 'correct' ? 'Correcto' : result === 'wrong' ? 'Incorrecto' : 'No presionaste :(' }}
+          <i v-if="result === 'correct'" class="pi pi-check icon"></i>
+          <i v-if="result === 'wrong'" class="pi pi-times icon"></i>
+          <i v-if="result === 'missed'" class="pi pi-exclamation-triangle icon"></i>
+          <span>{{ result === 'correct' ? 'Correcto' : result === 'wrong' ? 'Incorrecto' : 'No presionaste :(' }}</span>
         </p>
-
+        <br><br><br>
         <div class="timer">
           Tiempo restante: {{ timer }} segundos
         </div>
@@ -67,7 +70,6 @@ export default {
       hasAnswered: false,
       responseTimes: [],
       startTime: null,
-      showWaitingSymbol: false,
     };
   },
   mounted() {
@@ -97,23 +99,17 @@ export default {
 
       setTimeout(() => {
         this.showArrow = false;
+        if (!this.hasAnswered) {
+          this.result = 'missed';
+          this.missedArrows++;
+        }
+        this.showResult = true;
 
-        this.showWaitingSymbol = true;
         setTimeout(() => {
-          this.showWaitingSymbol = false;
-
-          if (!this.hasAnswered) {
-            this.result = 'missed';
-            this.missedArrows++;
+          this.showResult = false;
+          if (!this.timeUp) {
+            this.showNextArrow();
           }
-          this.showResult = true;
-
-          setTimeout(() => {
-            this.showResult = false;
-            if (!this.timeUp) {
-              this.showNextArrow();
-            }
-          }, 1000);
         }, 1000);
       }, 1000);
     },
@@ -183,7 +179,6 @@ export default {
       this.timeUp = false;
       this.showArrow = false;
       this.showResult = false;
-      this.showWaitingSymbol = false;
     },
 
     goToTaskSelection() {
@@ -253,6 +248,14 @@ export default {
 .result-text {
   font-size: 24px;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;    
+}
+
+.icon {
+  font-size: 2rem; 
+  margin-bottom: 10px; 
 }
 
 .correct {
@@ -309,14 +312,5 @@ export default {
 
 .result-screen button:hover {
   background-color: #f0f0f0;
-}
-
-.waiting-symbol {
-  font-size: 72px;
-  color: #aaa;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
 }
 </style>

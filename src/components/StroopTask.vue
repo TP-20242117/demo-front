@@ -6,7 +6,7 @@
         El objetivo de esta evaluación es identificar el <strong>color de la tinta</strong> de la palabra mostrada, no el <strong>significado</strong> de la palabra.
       </p>
       <h2>Ejemplo:</h2>
-      <p>AZUL</p>
+      <p :style="{ color: exampleColor.code }">{{ exampleColor.name }}</p>
       <p>Tendrás que presionar el color azul, y luego continuar con el color que te salga.</p>
       <button @click="startTask">Iniciar Tarea</button>
     </div>
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { postStroopTaskResults} from '../services/apiService.js';
+import { postStroopTaskResults } from '../services/apiService.js';
 
 export default {
   data() {
@@ -76,6 +76,7 @@ export default {
       timeUp: false,
       responseTimes: [],
       startTime: null,
+      exampleColor: { name: 'ROJO', code: '#0000ff' } 
     };
   },
   methods: {
@@ -136,21 +137,20 @@ export default {
     goToInstructions() {
       this.$emit('backToTaskSelection');
     },
+    async sendResults() {
+      const stroopData = {
+        patientId: parseInt(this.patientId),
+        responseTime: this.averageResponseTime,
+        correctAnswers: this.correctAnswers,
+        errors: this.wrongAnswers,
+      };
 
-    async sendResults(){
-        const stroopData = {
-          patientId: parseInt(this.patientId),
-          responseTime: this.averageResponseTime,
-          correctAnswers: this.correctAnswers,
-          errors: this.wrongAnswers,
-        };
-
-        try {
-          const response = await postStroopTaskResults(stroopData);
-          console.log("Resultados de Stroop Task enviados:", response);
-        } catch (error) {
-          console.error("Error al enviar resultados de Stroop Task:", error);
-        }
+      try {
+        const response = await postStroopTaskResults(stroopData);
+        console.log("Resultados de Stroop Task enviados:", response);
+      } catch (error) {
+        console.error("Error al enviar resultados de Stroop Task:", error);
+      }
     },
   },
   computed: {
