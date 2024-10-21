@@ -26,7 +26,6 @@
       <button :disabled="!acceptTerms" @click="handleTermsAccepted">Continuar</button>
     </div>
 
-    <!-- Pantalla de introducción: Pregunta sobre TDAH -->
     <div v-else-if="introScreen" class="screen intro-screen">
       <h2>¿Tienes TDAH?</h2>
       <div class="button-container">
@@ -35,7 +34,7 @@
       </div>
     </div>
 
-    <!-- Pantalla de selección de tareas -->
+
     <div v-else-if="!selectedTask" class="screen task-selection">
       <h2>Seleccione una tarea</h2>
       <div class="button-container">
@@ -45,7 +44,6 @@
       </div>
     </div>
 
-    <!-- Mostrar la tarea seleccionada -->
     <div v-else class="task-container">
       <button class="back-button" @click="selectedTask = null">Volver</button>
       <StroopTask v-if="selectedTask === 'stroop'" @backToTaskSelection="handleTaskCompleted('stroop')" />
@@ -108,8 +106,8 @@ export default {
       this.selectedTask = task;
     },
     handleTaskCompleted(task) {
-      this.tasksCompleted[task] = true; // Marca la tarea como completada
-      this.selectedTask = null; // Regresa a la selección de tareas
+      this.tasksCompleted[task] = true;
+      this.selectedTask = null;
     },
   },
 };
