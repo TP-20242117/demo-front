@@ -34,7 +34,6 @@
       </div>
     </div>
 
-
     <div v-else-if="!selectedTask" class="screen task-selection">
       <h2>Seleccione una tarea</h2>
       <div class="button-container">
